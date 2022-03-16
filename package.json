@@ -1,0 +1,18 @@
+{
+  "name": "hakaton-electron",
+  "version": "1.0.0",
+  "description": "hakaton",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "edoxa1",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^17.1.2"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0"
+  }
+}
