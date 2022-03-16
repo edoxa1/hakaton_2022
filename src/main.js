@@ -1,6 +1,4 @@
-const url = require('url')
 const path = require('path')
-
 
 const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron')
 const csvLoader = require('./csv-loader.js')

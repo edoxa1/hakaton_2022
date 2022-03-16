@@ -1,24 +1,53 @@
 const { ipcMain, ipcRenderer} = require('electron')
+const template = require(__dirname + "\\src\\local-templates.js")
 
-// devices is defined already
 
-let par = document.querySelector("#list");
+let categories_div = document.querySelector(".categories");
+let devicesData = {};
+
+// handlebars template
 
 const callCsvData = ()  => {
-    par.innerHTML = "";
+    console.log("a");   
     ipcRenderer.send('get_csv_data', 'processors');
 }
 
-par.addEventListener('click', callCsvData);
-
+window.addEventListener('DOMContentLoaded', callCsvData);
 ipcRenderer.on('csv_data_reply', (event, data) => {
-    var last_type = data[0].type;
-    data.forEach((device) => {
-        if(device.type != last_type) {
-            par.innerHTML += "<hr>";
-        }
-        par.innerHTML += device.type + " | " + device.name + "<br>";
-        last_type = device.type;
-    });
-    par.removeEventListener('click', callCsvData);
+    devicesData = data;
+    showCategories();
 });
+
+const showCategories = () => {
+    console.log(devicesData);
+    for(const key in devicesData) {
+        type = devicesData[key][0].type;
+        category = devicesData[key][0].category;
+        categories_div.innerHTML += template.categoriesTemplate(type, category);
+    }
+};
+
+/*
+
+console.log(data);
+    for(const key in data) {
+        c = data[key][0].category;
+        options_temp = "";
+
+        data[key].forEach((device) => {
+            options_temp += 
+            `
+                <option value="${device.name}">${device.name}</option>
+            `
+        });
+
+        categories_div.innerHTML += 
+        `
+            <br>
+            <label  for="${c}">${c}</label>
+            <select name="${c}">${options_temp}</select><br>
+        `;
+    }
+
+    categories_div.removeEventListener('click', callCsvData);
+*/
