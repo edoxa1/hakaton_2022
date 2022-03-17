@@ -5,20 +5,60 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <!--bootstrap 4 link-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
-
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
+    <script src="bootstrap/bootstrap.min.js"></script>
     <link rel="stylesheet" href="styles/index.css">
 
-    <title>Hello World!</title>
+    <title>MineCalc</title>
+    <!---->
     <script defer src="src/renderer.js"></script>
     <script defer src="src/classes/Device.js"></script>
     <script defer src="src/events.js"></script>
 </head>
 <body>
-    <div class="categories">
-        Категории:         
+    <div class="main_box bg-light container justify-content-center">
+        <div class="categories container row">
+        </div>
+        <div class="devices_droplist"></div>
     </div>
-    <div class="devices_droplist"></div>
+
+    <div class="specs_calculator bg-light row container justify-content-center">
+        <h4>
+            <div class="currency_text column justify-content-space-between">
+                Курс валюты 
+                <select name="currency" id="currency_exchange">
+                    <option value="USD">USD</option>
+                    <option value="KZT">KZT</option>
+                    <option value="RUB">RUB</option>
+                </select>
+                <h4><span id="currency_value">1 USD = 1 USD</span></h4> 
+                <br> 
+                <h4><span id="consumption_revenue_values">
+                    Общий расход: 0 [тг / кВт * час]
+                    <br>
+                    Общий доход: 0 [$]
+                </span></h4>
+            </div>
+        </h4>
+        <button class="calculate_btn btn btn-primary">Посчитать</button>
+    </div>
+
+    <div class="center_box bg-light container justify-content-center">
+        <table class="selected_devices_table table table-hover">
+            <thead class="selected_devices_table_head">
+              <tr>
+                <th>Категория</th>
+                <th>Кол-во</th>
+                <th>Название</th>
+                <th>Расход [тг / кВт * час]</th>
+                <th>Заработок [$ / час]</th>
+              </tr>
+            </thead>
+            <tbody class="selected_devices_table_body">
+                
+            </tbody>
+          </table>
+        
+    </div>
 </body>
 </html>

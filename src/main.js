@@ -1,18 +1,20 @@
 const path = require('path')
 
-const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron')
-const csvLoader = require('./csv-loader.js')
+const { app, BrowserWindow, ipcMain, net } = require('electron')
+const { loadCsvFiles, loadCurrencies, categoriesList } = require('./csv-loader.js')
 
 var devices = [];
+var currencies = {};
 
 const createWindow = () => {
     const win = new BrowserWindow({
         width: 1200,
         height: 800,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'csv-loader.js'),
             nodeIntegration: true,
             contextIsolation: false,
+            icon: __dirname + '/icon.jpg',
         }
     });
 
@@ -28,7 +30,8 @@ app.whenReady().then(() => {
         });
     }
     
-    devices = csvLoader.loadCsvFiles(); // load csv file
+    devices = loadCsvFiles(); // load csv file
+    currencies = loadCurrencies();
 });
 
 // quit state for non-macOS users
@@ -37,8 +40,10 @@ app.on('window-all-closed', () => {
 });
 
 // send database from main 
-ipcMain.on("get_csv_data", (event, data) => {
-    event.reply("csv_data_reply", devices);
+ipcMain.on('get_csv_data', (event, data) => {
+    event.reply('csv_data_reply', devices);
 });
 
-
+ipcMain.on('get_currencies', (event, data) => {
+    event.reply('currencies_reply', currencies);
+});

@@ -2,28 +2,42 @@ const { ipcMain, ipcRenderer} = require('electron')
 const template = require(__dirname + "\\src\\local-templates.js")
 const selectedDevices = require(__dirname + "\\src\\selectedDevices.js")
 const events = require(__dirname + "\\src\\events.js")
+const { categoriesList } = require(__dirname + "\\src\\csv-loader.js")
 
 let categories_div = document.querySelector(".categories");
 let devicesData = {};
+let currencies = {};
 
-// handlebars template
-
-const callCsvData = ()  => {
-    ipcRenderer.send('get_csv_data', 'processors');
+const callCsvData = () => {
+    ipcRenderer.send('get_csv_data', 'data');
 }
 
-window.addEventListener('DOMContentLoaded', callCsvData);
+const callCurrenciesData = () => {
+    ipcRenderer.send('get_currencies', 'data');
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    callCsvData();
+    callCurrenciesData();
+});
 ipcRenderer.on('csv_data_reply', (event, devices) => {
     devicesData = devices;
     showCategories();
 });
 
+ipcRenderer.on('currencies_reply', (event, data) => {
+    currencies = data;
+    showCurrencies();
+});
+
+const showCurrencies = () => {
+    document.querySelector('#currency_exchange').innerHTML += template.currenciesTemplate();
+    document.querySelector('#currency_exchange').addEventListener('change', events.updateCurrency)
+};
+
 const showCategories = () => {
-    console.log(devicesData);
-    for(const key in devicesData) {
-        type = devicesData[key][0].type;
-        category = devicesData[key][0].category;
-        categories_div.innerHTML += template.categoriesTemplate(type, category);
+    for(const element of categoriesList) {
+        categories_div.innerHTML += template.categoriesTemplate(element.filename, element.category, element.icon);
     }
 
     document.querySelectorAll('.category').forEach((query) => {
@@ -31,5 +45,6 @@ const showCategories = () => {
         console.log(events.selectCategory)
         query.addEventListener('click', events.selectCategory);
     });
-};
 
+    document.querySelector('.calculate_btn').addEventListener('click', events.calculateSpecs);
+};

@@ -1,3 +1,44 @@
 body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     background-color: rgb(200, 200, 200);
+    margin-top: 10px;
+}
+
+.main_box {
+    margin-bottom: 5px;
+}
+
+.categories {
+    text-align: center;
+}
+
+.category {
+    margin-right: 3px;
+    padding-top: 25px;
+}
+
+.category:hover {
+    background-color: rgb(238, 238, 238);
+}
+
+.category:disabled {
+    background-color: rgb(238, 238, 238);
+}
+
+
+.center_box {
+    visibility: hidden;
+    padding-bottom: 7px;
+    margin-top: 5px;
+}
+
+.container {
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.selected_devices_table {
+    font-size: larger;
 }

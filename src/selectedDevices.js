@@ -1,6 +1,6 @@
 // selected devices
 
-var selectedDevices = {
+var userSelectedDevices = {
     processors: [],
     videocards: [],
     power_units:[],
@@ -9,12 +9,13 @@ var selectedDevices = {
 };
 
 const addToSelection = (device, quantity) => {
-    selectedDevices[device.type].push({
+    userSelectedDevices[device.type].push({
         device:device,
         quantity:quantity   
     });
-    console.log(selectedDevices);
+    console.log(userSelectedDevices);
 };
 
 module.exports.addToSelection = addToSelection;
+module.exports.userSelectedDevices = userSelectedDevices;
     
