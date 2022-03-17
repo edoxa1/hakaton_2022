@@ -3,8 +3,6 @@ const csv = require('csv-parser');
 const fs = require('fs');
 
 const Device = require('./classes/Device')
-const UserDeviceSelection = require('./classes/UserDeviceSelection.js')
-
 devices_list = [
 {
     filename: 'processors',
@@ -52,6 +50,5 @@ module.exports.loadCsvFiles = () => {
         devices[element.filename] = _devicesArray;
     });
     
-    var userSelectedDevices = new UserDeviceSelection();
-    return devices, userSelectedDevices;
+    return devices;
 }
