@@ -1,6 +1,7 @@
 class Device {
-    constructor(type, name, category, consumption, revenue) {
+    constructor(type, id, name, category, consumption, revenue) {
         this.type = type;
+        this.id = id;
         this.name = name;
         this.category = category;
         this.consumption = consumption;

@@ -4,6 +4,7 @@ const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron')
 const csvLoader = require('./csv-loader.js')
 
 var devices = [];
+var userSelectedDevices;
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -28,7 +29,7 @@ app.whenReady().then(() => {
         });
     }
     
-    devices = csvLoader.loadCsvFiles();
+    devices, userSelectedDevices = csvLoader.loadCsvFiles(); // load csv file
 });
 
 // quit state for non-macOS users
@@ -36,9 +37,9 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 });
 
-
+// send database from main 
 ipcMain.on("get_csv_data", (event, data) => {
-    event.reply("csv_data_reply", devices);
+    event.reply("csv_data_reply", devices, userSelectedDevices);
 });
 
 

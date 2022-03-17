@@ -1,20 +1,20 @@
 const { ipcMain, ipcRenderer} = require('electron')
 const template = require(__dirname + "\\src\\local-templates.js")
 
-
 let categories_div = document.querySelector(".categories");
 let devicesData = {};
+let userSelectedDevices;
 
 // handlebars template
 
 const callCsvData = ()  => {
-    console.log("a");   
     ipcRenderer.send('get_csv_data', 'processors');
 }
 
 window.addEventListener('DOMContentLoaded', callCsvData);
-ipcRenderer.on('csv_data_reply', (event, data) => {
-    devicesData = data;
+ipcRenderer.on('csv_data_reply', (event, devices, userSelectedDevices) => {
+    devicesData = devices;
+    userSelectedDevices = userSelectedDevices;
     showCategories();
 });
 
@@ -25,29 +25,9 @@ const showCategories = () => {
         category = devicesData[key][0].category;
         categories_div.innerHTML += template.categoriesTemplate(type, category);
     }
+
+    document.querySelectorAll('.category').forEach((query) => {
+        console.log(query);
+        query.addEventListener('click', selectCategory);
+    });
 };
-
-/*
-
-console.log(data);
-    for(const key in data) {
-        c = data[key][0].category;
-        options_temp = "";
-
-        data[key].forEach((device) => {
-            options_temp += 
-            `
-                <option value="${device.name}">${device.name}</option>
-            `
-        });
-
-        categories_div.innerHTML += 
-        `
-            <br>
-            <label  for="${c}">${c}</label>
-            <select name="${c}">${options_temp}</select><br>
-        `;
-    }
-
-    categories_div.removeEventListener('click', callCsvData);
-*/
