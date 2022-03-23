@@ -31,15 +31,35 @@
                     <option value="KZT">KZT</option>
                     <option value="RUB">RUB</option>
                 </select>
-                <h4><span id="currency_value">1 USD = 1 USD</span></h4> 
-                <br> 
-                <h4><span id="consumption_revenue_values">
-                    Общий расход: 0 [тг / кВт * час]
-                    <br>
-                    Общий доход: 0 [$]
-                </span></h4>
+                <h4 class="currencies_info">
+                    <div id="currency_value">1 USD = 1 USD
+                    </div> 
+                </h4> 
             </div>
         </h4>
+        <table class="calculated_statistics table table-hover">
+            <h5 id="selected_exchange_currency">Статистика отностиельно USD</h5>
+            <thead class="selected_devices_table_head">
+              <tr>
+                <th> # </th>
+                <th>1 час</th>
+                <th>24 часа</th>
+                <th>1 месяц</th>
+                <th>1 год</th>
+              </tr>
+            </thead>
+            <tbody class="calculated_statistics_body">
+                <tr id="total_revenue_row">
+                    <td>Общие затраты</td>
+                </tr>
+                <tr id="total_revenue_row">
+                    <td>Общий доход</td>
+                </tr>
+                <tr id="clear_revenue_row">
+                    <td>Чистая прибыль</td>
+                </tr>
+            </tbody>
+          </table>
         <button class="calculate_btn btn btn-primary">Посчитать</button>
     </div>
 
@@ -50,15 +70,15 @@
                 <th>Категория</th>
                 <th>Кол-во</th>
                 <th>Название</th>
-                <th>Расход [тг / кВт * час]</th>
-                <th>Заработок [$ / час]</th>
+                <th>Расход [KZT / кВт * час]</th>
+                <th>Заработок [USD / час]</th>
               </tr>
             </thead>
             <tbody class="selected_devices_table_body">
                 
             </tbody>
-          </table>
-        
+        </table>
+        <button class="reset_btn btn btn-primary">Сбросить</button>
     </div>
 </body>
 </html>

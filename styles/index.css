@@ -27,6 +27,11 @@ body {
     background-color: rgb(238, 238, 238);
 }
 
+#currency_value {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
 .center_box {
     visibility: hidden;

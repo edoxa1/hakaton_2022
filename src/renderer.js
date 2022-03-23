@@ -7,6 +7,7 @@ const { categoriesList } = require(__dirname + "\\src\\csv-loader.js")
 let categories_div = document.querySelector(".categories");
 let devicesData = {};
 let currencies = {};
+let currectCurrency = 'USD';
 
 const callCsvData = () => {
     ipcRenderer.send('get_csv_data', 'data');
@@ -47,4 +48,5 @@ const showCategories = () => {
     });
 
     document.querySelector('.calculate_btn').addEventListener('click', events.calculateSpecs);
+    document.querySelector('.reset_btn').addEventListener('click', events.refreshEverything);
 };

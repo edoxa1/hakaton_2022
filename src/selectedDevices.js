@@ -1,6 +1,6 @@
 // selected devices
 
-var userSelectedDevices = {
+let userSelectedDevices = {
     processors: [],
     videocards: [],
     power_units:[],
@@ -13,9 +13,15 @@ const addToSelection = (device, quantity) => {
         device:device,
         quantity:quantity   
     });
-    console.log(userSelectedDevices);
+    console.log("add: ", userSelectedDevices);
 };
+
+const refreshDevices = () => {
+    Object.keys(userSelectedDevices).forEach((key) => {
+        userSelectedDevices[key] = [];
+    });
+}
 
 module.exports.addToSelection = addToSelection;
 module.exports.userSelectedDevices = userSelectedDevices;
-    
+module.exports.refreshDevices = refreshDevices;    

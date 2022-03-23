@@ -10,12 +10,12 @@ const createWindow = () => {
     const win = new BrowserWindow({
         width: 1200,
         height: 800,
+        icon: __dirname + '\\svg\\icon.jpg',
         webPreferences: {
             preload: path.join(__dirname, 'csv-loader.js'),
             nodeIntegration: true,
             contextIsolation: false,
-            icon: __dirname + '/icon.jpg',
-        }
+        },
     });
 
     win.loadFile('index.html'); // load main file

@@ -23,7 +23,7 @@ const devicesDropListTemplate = (category_type) => {
             ${category_name}
             <br>
             <select class="user_device_select form-control" id=${category_type}>${options_temp}</select>
-            <input type="number" class="device_quantity_select form-control-sm-2" id="${category_type}" value="1" min="1" max="30">
+            Количество: <input type="number" class="device_quantity_select form-control-sm-2" id="${category_type}" value="1" min="1" max="30">
             <br>
             <br>
             <button class="submit_device_select btn btn-primary">Выбрать</button>
@@ -55,8 +55,9 @@ const currenciesTemplate = () => {
     `);
 }
 
-const specsCalculatorTemplate = () => {
+const specsCalculatorTemplate = (currectCurrency, chargeForElectricity) => {
     let data = selectedDevices.userSelectedDevices;
+    console.log(data);
     let consumption = 0;
     let revenue = 0;
     Object.keys(data).forEach((key) => {
@@ -65,11 +66,41 @@ const specsCalculatorTemplate = () => {
             revenue += unit.device.revenue * unit.quantity;
         });
     });
+    let exchangedConsumption = consumption / currencies['KZT'] * currencies[currectCurrency];
+    if(currectCurrency != 'BTC')
+        exchangedConsumption = Math.round(exchangedConsumption  * 1000) / 1000;
 
+    let exchangedRevenue = revenue * currencies[currectCurrency];
+        if(currectCurrency != 'BTC')
+            exchangedRevenue = Math.round(exchangedRevenue  * 1000) / 1000;
+    
+    
     return(`
-        Общий расход: ${consumption} [тг / кВт * час]
-        <br>
-        Общий доход: ${revenue} [$]
+        
+        <tr id="total_consumption_row">
+            <td>Общие затраты</td>
+            <td>${exchangedConsumption}</td>
+            <td>${exchangedConsumption * 24}</td>
+            <td>${exchangedConsumption * 24 * 30}</td>
+            <td>${exchangedConsumption * 24 * 30 * 365}</td>
+        </tr>
+
+        <tr id="total_revenue_row">
+            <td>Общий доход</td>
+            <td>${exchangedRevenue}</td>
+            <td>${exchangedRevenue* 24}</td>
+            <td>${exchangedRevenue * 24 * 30}</td>
+            <td>${exchangedRevenue * 24 * 30 * 365}</td>
+        </tr>
+        <tr id="clear_revenue_row">
+            <td>Чистый доход</td>
+            <td>${exchangedRevenue - exchangedConsumption}</td>
+            <td>${24 * (exchangedRevenue - exchangedConsumption)}</td>
+            <td>${24 * 30 * (exchangedRevenue - exchangedConsumption)}</td>
+            <td>${24 * 30 * 365 * (exchangedRevenue - exchangedConsumption)}</td>
+        </tr>
+
+       
     `);
 }
 
@@ -78,3 +109,19 @@ module.exports.devicesDropListTemplate = devicesDropListTemplate;
 module.exports.selectedDevicesTemplate = selectedDevicesTemplate;
 module.exports.currenciesTemplate = currenciesTemplate;
 module.exports.specsCalculatorTemplate = specsCalculatorTemplate;
+
+/*
+ Общий расход: ${consumption} [KZT / кВт * час]
+         = [${ exchangedConsumption } ${ currectCurrency }  / кВт * час]<br>
+        Общий доход: ${revenue} [$] = ${Math.round(revenue * currencies['KZT'] * 1000) / 1000} [KZT] = ${ exchangedRevenue } [${ currectCurrency }]
+
+        Общий расход за сутки: ${consumption} [KZT / кВт * час]
+         = [${ exchangedConsumption } ${ currectCurrency }  / кВт * час]<br>
+        Общий доход: ${revenue} [$] = ${Math.round(revenue * currencies['KZT'] * 1000) / 1000} [KZT] = ${ exchangedRevenue } [${ currectCurrency }]
+
+        Общий расход: ${consumption} [KZT / кВт * час]
+         = [${ exchangedConsumption } ${ currectCurrency }  / кВт * час]<br>
+        Общий доход: ${revenue} [$] = ${Math.round(revenue * currencies['KZT'] * 1000) / 1000} [KZT] = ${ exchangedRevenue } [${ currectCurrency }]
+
+
+*/
